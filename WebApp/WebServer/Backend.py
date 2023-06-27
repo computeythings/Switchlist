@@ -23,6 +23,22 @@ def get_securecrt():
         if "SecureCRT.exe" in userdata:
             return userinstalldir + "\\SecureCRT.exe"
         
+    userinstalldir = os.getenv("LOCALAPPDATA") + "\\VanDyke Software\\Clients\\SecureCRT"
+    if os.path.exists(userinstalldir):
+        logging.debug(f'Local AppData: {userinstalldir}')
+        userdata = subprocess.check_output(f"dir \"{userinstalldir}\"", shell=True).decode()
+        logging.debug(f"User Files:{userdata}")
+        if "SecureCRT.exe" in userdata:
+            return userinstalldir + "\\SecureCRT.exe"
+        
+    sysinstalldir = os.getenv("PROGRAMFILES") + "\\VanDyke Software\\Clients\\SecureCRT"
+    if os.path.exists(sysinstalldir):
+        logging.debug(f"System Directory: '{sysinstalldir}'")
+        sysdata = subprocess.check_output(f"dir \"{sysinstalldir}\"", shell=True).decode()
+        logging.debug(f"System Files:{sysdata}")
+        if "SecureCRT.exe" in sysdata:
+            return sysinstalldir + '\\SecureCRT.exe'
+        
     logging.warn("Unable to locate SecureCRT install")
     return None
 

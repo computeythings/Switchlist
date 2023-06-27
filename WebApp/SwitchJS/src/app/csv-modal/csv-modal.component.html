@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<h4 class="modal-title">Export List</h4>
+	<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+	<p style="text-align:center;">Export {{ devices.length }} devices?</p>
+	<div class="break"></div>
+	<div class="advanced-view-button" (click)="toggleAdvanced()">
+		<div class="rotate-icon" [class.open]="showAdvanced"><i class="fal fa-chevron-down" ></i></div>Advanced
+	</div>
+	
+	<div class="break"></div>
+	<div class="advanced-view" [@openClose]="showAdvanced ? 'open' : 'closed'">
+		<ng-container *ngFor="let attr of orderedHeaderTemplate">
+			<div>
+				<input class="device-attr" type="checkbox" [checked]="deviceAttr[attr].csvInclude" (change)="updateExportAttr(attr, $event.target.checked)"> {{ attr }}
+			</div>
+		</ng-container>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-outline-primary" (click)="exportCSV()">Save</button>
+</div>

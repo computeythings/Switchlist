@@ -1,0 +1,115 @@
+/* 
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*
+*	SIDE MENU
+*
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*/
+Overview:
+	Sites:
+		CORE 1:
+		CORE 2:
+		CORE 3:
+	Security -> STIG info/metrics
+	Jobs -> job history
+
+/*
+*	Pop-up for site-add
+*/
+	Right-click group to add sub-group
+	When adding group, the name should be primary text box in form with secondary box to add a subnet as well as a + option to add additional
+	ex.
+		Group name: ___________________________
+		Subnet:		___________________________
+		Subnet:		___________________________ [-] [+] (<- clicking this adds a subnet)
+												(^ clicking this removes the subnet row)
+
+/* 
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*
+*	SITE OVERVIEW
+*
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*/
+Switch list: Banded view of all MAPPED switches within selected category
+	- Switches that have never been mapped will not show up
+	- Offline devices should show up but indicate no reachability
+	- Clicking on the main body of a switch will show 
+	- Should include a filter option for each field
+	- Re-scan all active button
+	- Discover new devices button
+		- checklist for all existing subnets, option to add new subnet
+	- Option to view free IP space?
+	- Export as CSV button
+		- Allow for specific details
+
+
+Scan Now -> Button that re-scans this device individually
+	- when scanning, set device state to "Updating" and show loading icon until finished
+Checkbox	IP Address	Hostname		Model				Serial			Status
+[ ]			10.1.1.1	EXAMPLE-AN-123	Cisco C9300-48U		FJC123456765	Online
+[ ]			10.123.2.7	EXAMPLE-DEAD-1	Cisco C9300-24U		FOC879556765	Offline
+
+
+Switch Details:
+
+IOS Version: IOS-XE 17.3.5
+Model:
+				Switch 1: Cisco C9300-24U
+				Switch 2: Cisco C9300-48U
+				Switch 3: Cisco C9300-48P
+Hostname: EXAMPLE-DN-123
+Serial:
+				Switch 1: FJC123456765
+				Switch 2: FJC123456766
+				Switch 3: FJC123456767
+
+IP Addresses:
+				Vlan1: 10.1.1.1/24
+				Vlan2: 10.1.2.1/24
+				Vlan3: 10.1.3.1/24
+				Vlan4: 10.1.4.1/24
+				Vlan5: 10.1.5.1/24
+				GigabitEthernet1/1/1: 10.255.255.1/30
+CDP Neighbors:
+				GigabitEthernet1/1/1: EXAMPLE-CN-123
+				GigabitEthernet1/1/2: EXAMPLE-AN-345
+				GigabitEthernet1/1/3: EXAMPLE-AN-567
+				
+MAC Address: ac:4a:56:6c:7c:00
+Uptime: 270 Days 3 hr 11 min
+Reachable: Checkmark/X
+Last Updated: 11 Dec 2022
+User ports: 43
+Configuration: (This should definitely be a separate view - maybe even just download a .txt file)
+
+
+/* 
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*
+*	SECURITY VIEW
+*
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** 
+*/
+STIG Violations: (This should be in a separate view with a STIG Viewer-like pie chart)
+				Checklists applied: L2 IOS-XE, IOS-XE NDM
+				CAT I: 0 of 30 Open
+				CAT II: 12 of 254 Open
+				CAT III: 5 of 152 Open
+
+/* 
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+*
+*	JOBS VIEW
+*
+* ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** 
+*/
+Table view similar to switch list
+Check CUCM Job Scheduler for template
+
+Job types: Scan/Discover/STIG?
+
+Job Type	Date						Run as							Job Size	Status
+Scan		16:32 GMT 4 January, 2023	<username that ran scan>		50 			In Progress - 65% (maybe progress bar)
+Scan		10:23 GMT 3 January, 2023	<username that ran scan>		50 			Complete
+Scan		10:22 GMT 3 January, 2023	<username that ran scan>		50 			Interrupted

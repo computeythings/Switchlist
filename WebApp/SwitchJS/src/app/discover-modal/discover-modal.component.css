@@ -1,0 +1,43 @@
+.modal-body {
+    position: relative;
+    flex-wrap: wrap;
+    white-space: nowrap;
+    width: 100%;
+}
+.credential-form {
+    padding-top: 1em
+}
+.credential {
+    padding: .5em 0;
+}
+.credential-input {
+    width: 50%
+}
+.advanced-view-button {
+    display: flex;
+    cursor: pointer;
+}
+.rotate-icon {
+    width: fit-content;
+    height: fit-content;
+    transition: all 0.1s;
+    margin-right: .3em;
+}
+.rotate-icon.open {
+    transform: rotate(-180deg);
+    transition: all 0.1s;
+}
+
+.break {
+    width: 0;
+    flex-basis: 100%;
+}
+
+.advanced-view {
+    overflow: hidden;
+}
+
+i {
+    font-family: FontAwesome;
+    font-style: normal;
+}

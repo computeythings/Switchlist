@@ -1,0 +1,55 @@
+<div class="table-functions">
+    <div class="search">
+        <i class="fa fa-icon fa-search" aria-hidden="true"></i>
+        <input type="text" id="device-search" (input)="updateFilter($event)">
+    </div>
+    <div class="table-function" [class.disabled]="selectedCount === 0 || jobRunning" appRotateIcon (click)="updateDevices()" title="Update existing device info">
+        <i class="fa fa-icon fa-solid fa-rotate-right rotate-icon" aria-hidden="true"></i> 
+        Update
+    </div>
+    <div *ngIf="!jobRunning" class="table-function" (click)="discover()" title="Search for new devices">
+        <i class="fa fa-icon fa-search" aria-hidden="true"></i>
+        Discover
+    </div>
+    <div *ngIf="jobRunning" class="table-function disabled" title="Discovering...">
+        <img 
+        *ngIf="jobRunning"
+        class="status-icon scanning" 
+        type="image/svg+xml" 
+        src="assets/svg/scanning.svg" 
+        alt="Discovering">
+        {{ discoverProgress.toFixed(0) }}%
+    </div>
+    <div class="table-function" (click)="saveCSVDialog()">
+        <i class="fa fa-solid fa-download" aria-hidden="true"></i>
+        Export
+    </div>
+    <span id="device-count" title="Stack Members: {{countStackMembers()}}">Total Devices: {{ countDevices() }}</span>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th class="row-selector"><input type="checkbox" id="select-all" [checked]="deviceCount == selectedCount && deviceCount > 0" (change)="toggleSelectAll($event.target.checked)"></th>
+            <th *ngFor="let header of tableHeaders" resizable (resizeEnd)="onResize($event, header.selector)">
+                <div class="title-col">
+                    <input class="columnFilter" type="text" placeholder="{{ header.name }}">
+                    <div class="sortBox" (click)="tableSort(header.selector)">
+                        <div *ngIf="sortKey != header.selector" class="fa fa-sort columnSortIcons"></div>
+                        <div *ngIf="sortKey == header.selector && sortOrder == SORT_ASC" class="fa fa-sort-up columnSortIcons"></div>
+                        <div *ngIf="sortKey == header.selector && sortOrder == SORT_DESC" class="fa fa-sort-down columnSortIcons"></div>
+                    </div>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody 
+        app-table-entry 
+        #tableRow
+        *ngFor="let entry of tableData; index as i" 
+        [entry]="entry"
+        [index]="entry.scan_ip"
+        [tableHeaders]="tableHeaders" 
+        [filterString]="filterString" 
+        (tableCallback)="tableEntryCallback($event)">
+    </tbody>
+</table>

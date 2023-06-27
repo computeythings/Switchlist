@@ -1,0 +1,29 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.data {
+    position: static;
+    margin-top: 5%;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+footer {
+    position: static;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    color: #cacaca;
+    font-size: x-small;
+    padding-bottom: 0;
+    width: 100%;
+  }
+
+footer p {
+    padding: 0 15px;
+}

@@ -1,0 +1,13 @@
+Backend will be written in Python to support native integration with existing codebase
+Backend should be able to serve up a web application utilizing AngularJS (Flask)
+Live updates should be supported (Flask-SSE)
+WebApp should only be served to localhost to avoid user authentication requirements 
+    (I don't want to deal with local authentication databases and there's no way I'll be able to get an AD service account for SSO)
+Support for on-demand login/management of devices via backend SSH programs - should prompt for username/password on scan request
+Support to run sets of commands/fixing specific STIGs/pulling specific data from one or more devices
+Backend should store a database of devices including a history of devices models/serials in case of replacement
+    Good chance I may acutally use a SQLite database for multi-user access
+API should be separated from view components
+Should support TLS - ideally using machine cert for DoD trust
+
+Upon failed scan, simply leave data the same but alert end user

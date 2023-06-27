@@ -1,0 +1,43 @@
+i {
+    font-family: FontAwesome;
+    font-style: normal;
+}
+
+.entry-field {
+    padding: 0 1em;
+    align-items: baseline;
+    justify-items: baseline;
+    vertical-align: baseline;
+}
+.entry-field label {
+    padding-right: 1em;
+}
+.entry-field input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #000;
+}
+.entry-field .subnet-input {
+    padding: .5em;
+}
+
+.site-delete {
+    float: right
+}
+.sites-footer {
+    width: 100%;
+    text-align: center;
+    padding-top: 1em;
+}
+
+.add-btn {
+    cursor: pointer;
+    color: #4aa5ff;
+    opacity: .6;
+    padding: 0 .2em;
+}
+.del-btn {
+    cursor: pointer;
+    opacity: .6;
+    color: red;
+    padding: 0 .2em;
+}

@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<h4 class="modal-title">Update Device Information</h4>
+	<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <h5>Login Credentials</h5>
+    <div class="credential">
+        Username: <input class="credential-input" type="text" [(ngModel)]="username">
+    </div>
+    <div class="credential">
+        Password: <input class="credential-input" type="password" [(ngModel)]="password">
+    </div>
+</div>
+<div class="modal-footer">
+	<button [disabled]="username == '' || password == ''" type="button" class="btn btn-outline-primary" (click)="submit()">Update</button>
+</div>

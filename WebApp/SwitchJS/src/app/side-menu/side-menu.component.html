@@ -1,0 +1,25 @@
+<aside id="side-menu" [class.open]="isMenuOpen">
+    <div class="nav-location">
+        <span (click)="menuSelect('Sites')">Sites</span>
+        <i class="fa fa-solid fa-pencil" (click)="openSiteModal()" *ngIf="focusCategory == 'Sites'"></i>
+        <ul [@openClose]="focusCategory == 'Sites' ? 'expanded' : 'collapsed'">
+            <ng-container *ngFor="let site of sites; let i = index">
+                <li class="site-subnet-header" [ngClass]="isSiteExpanded(i) ? 'expanded' : 'collapsed'" (click)="siteExpandToggle(i)">
+                    {{ site.name }}
+                </li>
+                <ul class="site-nav-entry" [@openClose]="isSiteExpanded(i) ? 'expanded' : 'collapsed'">
+                    <li class="site-nav-subnet" *ngFor="let subnet of site.subnets">
+                        {{ subnet }}
+                    </li>
+                </ul>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="nav-location">
+        <span (click)="menuSelect('Security')">Security</span>
+    </div>
+    <div class="nav-location">
+        <span (click)="menuSelect('Jobs')">Jobs</span>
+    </div>
+</aside>
+  

@@ -1,0 +1,73 @@
+<ng-container *ngIf="isFiltered()">
+    <tr>
+        <td class="row-selector">
+            <input type="checkbox" id="select-item" [checked]="selected" (change)="toggleSelect($event.target.checked)">
+        </td>
+        <ng-container *ngFor="let header of tableHeaders">
+            <td *ngIf="header.selector != 'status'" (click)="toggleDetailView(!detailView)">
+                {{ getTableValue(header.name) }}
+            </td>
+        </ng-container>
+        <td (click)="toggleDetailView(!detailView)">
+            <img class="status-icon" [class.scanning]="scanning" type="image/svg+xml" [src]="icon" [alt]="iconAlt" [title]="iconAlt">
+        </td>
+    </tr>
+    <tr class='detail-row'>
+        <td [attr.colspan]="tableHeaders.length+1" class="detail-view">
+            <div class="detail-content" [ngClass]="detailView ? 'expanded' : 'collapsed'">
+                <div class="detail-column">
+                    <div class="column-content">
+                        <ul>
+                            <h4 class="detail-info-header">IP Address:</h4>
+                            <ng-container *ngFor="let ip of entry.ip_addresses | keyvalue">
+                                <li *ngIf="ip.value.vrf != ''" style="padding-bottom: 5px;"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}<br><strong style="font-size: 11px; padding-left: 5%;">VRF {{ ip.value.vrf }}</strong></li>
+                                <li *ngIf="ip.value.vrf == ''"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}</li>
+                            </ng-container>
+                            <h4 class="detail-info-header">Model:</h4>
+                            <li *ngFor="let model of entry.model">{{model}}</li>
+                            <h4 class="detail-info-header">Serial:</h4>
+                            <li *ngFor="let serial of entry.serial">{{serial}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-column">
+                    <div class="column-content">
+                        <ul>
+                            <h4 class="detail-info-header">User Ports:</h4>
+                            <li>{{ entry.users }}</li>
+                            <h4 class="detail-info-header">MAC Address:</h4>
+                            <li *ngFor="let mac of entry.base_mac">{{mac}}</li>
+                            <h4 class="detail-info-header">Uptime:</h4>
+                            <li>{{ entry.uptime }}</li>
+                            <h4 class="detail-info-header">Last Updated:</h4>
+                            <li>{{ updatedString }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-column">
+                    <div class="column-header">
+                        <h4 class="detail-info-header">Neighboring Devices:</h4>
+                    </div>
+                    <div class="column-content">
+                        <ul class="half-width-column">
+                            <li *ngFor="let neighbor of neighborsCol1 | keyvalue">
+                                <div class="content-keyvalue">
+                                    <div class="content-key"><div>{{ portName(neighbor.key) }}:</div></div>
+                                    <div class="content-value">{{neighbor.value.distant_host}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="half-width-column" *ngIf="neighborsCol2">
+                            <li *ngFor="let neighbor of neighborsCol2 | keyvalue">
+                                <div class="content-keyvalue">
+                                    <div class="content-key">{{ portName(neighbor.key) }}:</div>
+                                    <div class="content-value">{{neighbor.value.distant_host}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</ng-container>

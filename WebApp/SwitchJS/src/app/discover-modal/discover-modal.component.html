@@ -1,0 +1,34 @@
+<div class="modal-header">
+	<h4 class="modal-title">Discover</h4>
+	<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <div *ngFor="let site of sites">
+        <p>{{ site.name }}</p>
+        <ul>
+            <div *ngFor="let subnet of site.subnets">
+                <input class="device-attr" 
+                    type="checkbox" 
+                    [checked]="siteSubnets[subnet]"
+                    (change)="siteSubnets[subnet] = $event.target.checked"> {{ subnet }}
+            </div>
+        </ul>
+    </div>
+    <div>
+        <input class="device-attr" 
+            type="checkbox" 
+            (change)="scrape = $event.target.checked"> Pull information on discover?
+    </div>
+    <div *ngIf="scrape" class="credential-form">
+        <h5>Login Credentials</h5>
+        <div class="credential">
+            Username: <input class="credential-input" type="text" [(ngModel)]="username">
+        </div>
+        <div class="credential">
+            Password: <input class="credential-input" type="password" [(ngModel)]="password">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+	<button [disabled]="sitesSelected()" type="button" class="btn btn-outline-primary" (click)="submit()">Discover</button>
+</div>

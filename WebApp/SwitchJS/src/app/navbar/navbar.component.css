@@ -1,0 +1,63 @@
+header {
+  background-color: #4aa5ff;
+  padding: 5px 0;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: relative;
+}
+div a {
+  text-decoration: none;
+  color: #eee;
+  font-weight: 400;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#banner {
+  width: 100%;
+  text-align: center;
+  height: 0;
+}
+
+.navbar-container {
+  position: relative;
+}
+
+#menu-button {
+  margin: 0 20px;
+  transform: translateY(60%);
+  border: none;
+  background: none;
+  cursor: pointer;
+  float: left;
+  color: white;
+  align-self: center;
+}
+
+#options-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  float: right;
+  color: white;
+  border: none;
+  background: none;
+  margin: 0 20px;
+}
+
+#status {
+  font-size: 13px;
+  color: #ddd;
+  float: right;
+  margin-right: 20px;
+}
+
+i {
+  font-family: FontAwesome;
+  font-style: normal;
+  color: #ddd;
+}

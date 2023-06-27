@@ -1,0 +1,16 @@
+<header>
+  <div id="banner">
+    <div class="navbar-container">
+      <i  id="menu-button" (click)="toggleMenu()" class="fa-solid fa-bars"></i>
+    </div>
+    <a href="#">The Gonnella List</a>
+    <button id="options-button" mat-icon-button [matMenuTriggerFor]="optionsMenu" aria-label="Options">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #optionsMenu="matMenu">
+      <button mat-menu-item (click)="onOptionClick('UpdateCRT')">Update SecureCRT</button>
+      <button mat-menu-item (click)="onOptionClick('Settings')">Settings</button>
+    </mat-menu>
+  </div>
+</header>
+<app-side-menu [isMenuOpen]="isMenuOpen" (toggleMenu)="toggleMenu()"></app-side-menu>

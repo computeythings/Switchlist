@@ -1,0 +1,31 @@
+<div class="modal-header">
+	<h4 class="modal-title">All Sites</h4>
+	<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <div *ngFor="let site of sites; let siteIndex = index; trackBy:nameIndexTracker"
+     (mouseenter)="siteFocus = siteIndex"
+     (mouseleave)="siteFocus = -1"
+     >
+        <button *ngIf="siteFocus === siteIndex" type="button" class="btn-close site-delete" aria-label="Close" (click)="removeSite(siteIndex)"></button>
+        <div class="entry-field">
+            <label for="site-name">Name:</label>
+            <input id="site-name" type="text" [(ngModel)]="site.name">
+        </div>
+        <div class="entry-field">
+            <div class="subnet-input" *ngFor="let subnet of site.subnets; let subnetIndex = index; trackBy:subnetIndexTracker">
+                <label for="site-name">Subnet:</label>
+                <input id="site-name" type="text" [(ngModel)]="site.subnets[subnetIndex]">
+                <i *ngIf="subnetIndex === site.subnets.length - 1 && site.subnets.length > 1" class="fa fa-minus del-btn" (click)="removeSubnet(siteIndex, subnetIndex)"></i>
+                <i *ngIf="subnetIndex === site.subnets.length - 1" class="fas fa-plus add-btn" (click)="addSubnet(siteIndex)"></i>
+            </div>
+        </div>
+        <hr *ngIf="siteIndex < sites.length - 1">
+    </div>
+    <div class="sites-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="addSite()">Add Site</button>
+    </div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-outline-primary" (click)="submit()">Submit</button>
+</div>

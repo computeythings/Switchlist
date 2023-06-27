@@ -1,0 +1,22 @@
+This should be a web app that allows a high-level overview of all devices on a network.
+Most importantly, the following attributes shoud be tracked on an ongoing basis: 
+    - a count of all online devices and a percentage of total historic online
+    - a history of devices that have been replaced/removed
+    - total switch count (i.e. 3 devices should be counted for a single stack of 3 switches)
+    - Switch neighbors should be detailed in a separate view for traceability
+    - image inventory - pie chart showing which devices are on which IOS
+    - Some sort of topology view
+
+Additional functionality to view and run STIGs should be added once inventory features are complete
+STIGs should be able to be viewed as an overall chart with every (scanned) device combined
+STIGs should be able to be sorted by checklist, device type, or device information (i.e. filters for specific device attributes)
+STIG checklists should be able to be uploaded from the GUI and stored as specific types. Advanced options should allow older scans
+Checklists for each devices should be able to be exported - a signature should be prompted for and inserted on export
+
+
+BUILD INSTRUCTIONS
+===============================================
+- Under angular.json > project.architect.build.options > set baseHref to "/static/"
+- run 'ng build --build-optimzier'
+- copy all files from SwitchJS/dist to Webserver/static
+- move Webserver/static/index.html to Webserver/templates/index.html

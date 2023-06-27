@@ -9,7 +9,6 @@
 ##
 
 import shutil
-import getpass
 import json
 import os, sys
 import SecureCRT
@@ -23,8 +22,8 @@ def copy_themes(current_dir):
     '''
     Copy themes into local user's secureCRT keyword directory
     '''
-    shutil.copyfile(current_dir + '\\' + darkthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(getpass.getuser(),darkthemepath))
-    shutil.copyfile(current_dir + '\\' + lightthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(getpass.getuser(),lightthemepath))
+    shutil.copyfile(current_dir + '\\' + darkthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(os.path.expanduser('~'),darkthemepath))
+    shutil.copyfile(current_dir + '\\' + lightthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(os.path.expanduser('~'),lightthemepath))
 
 def jsonimport(filepath):
     if not os.path.exists(filepath):

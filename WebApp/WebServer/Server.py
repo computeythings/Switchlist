@@ -2,12 +2,16 @@ from ipaddress import IPv4Network
 from WebApp.WebServer.Job import Job
 from WebApp.WebServer.Device import Device
 import WebApp.WebServer.Backend as Backend
-import asyncio, logging, traceback, os, json, time
+import asyncio, logging, traceback, os, json, time, sys
 from aiohttp import web
 from aiohttp_sse import sse_response
 from aiohttp_cors import setup, ResourceOptions
 logger = logging.getLogger(__name__)
-bundle_dir = os.path.abspath(os.path.dirname(__file__))
+
+if getattr(sys, 'frozen', False):
+    bundle_dir = application_path = sys._MEIPASS
+elif __file__:
+    bundle_dir = os.path.dirname(__file__)
 
 class Server:
     def __init__(self, database=None, connect_method=None):

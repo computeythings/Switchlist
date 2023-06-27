@@ -8,7 +8,10 @@ a = Analysis(
     ['webserver.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        ('WebApp/WebServer/static', 'static'), 
+        ('WebApp/WebServer/templates', 'templates')
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

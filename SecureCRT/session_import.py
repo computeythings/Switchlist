@@ -8,23 +8,11 @@
 #    Misawa AB
 ##
 
-import shutil
 import json
 import os, sys
-from pathlib import Path
 import SecureCRT
 
 DEBUG = False
-
-darkthemepath = 'cisco_dark.ini' 
-lightthemepath = 'cisco_light.ini'
-
-def copy_themes(current_dir):
-    '''
-    Copy themes into local user's secureCRT keyword directory
-    '''
-    shutil.copyfile(current_dir + '\\' + darkthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(Path.home(),darkthemepath))
-    shutil.copyfile(current_dir + '\\' + lightthemepath, 'C:\Users\%s\AppData\Roaming\VanDyke\Config\Keywords\%s' %(Path.home(),lightthemepath))
 
 def jsonimport(filepath):
     if not os.path.exists(filepath):
@@ -155,9 +143,6 @@ def main():
     if not list_path.endswith(".json"):
         return crt.Dialog.MessageBox("Unable to locate JSON data", "ERROR", ICON_WARN)
     jsonlist = jsonimport(list_path)
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-
-    copy_themes(current_dir)
     default_theme, l3_theme = get_theme_prefs()
 
     list_to_config(jsonlist, default_theme, l3_theme)

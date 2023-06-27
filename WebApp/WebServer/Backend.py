@@ -2,6 +2,10 @@ import os, subprocess, time, json, shutil, logging, pathlib
 logging.basicConfig(level=logging.INFO,
     format='%(levelname)s: %(asctime)s - %(message)s')
 
+
+darkthemepath = 'cisco_dark.ini' 
+lightthemepath = 'cisco_light.ini'
+
 def get_securecrt():
     '''
     Locates SecureCRT on host device. Local install vs System Install
@@ -55,13 +59,7 @@ def temporary_importscript():
     '''
     Creates a temprorary directory on the host device containing the SecureCRT import script and required resources
     '''
-    tempdir = os.getenv("TEMP") + f"\\import_{int(time.time())}"
-    crtdir = f"{pathlib.Path().resolve()}\\SecureCRT"
-    crtdata = subprocess.check_output(f"dir \"{crtdir}\"", shell=True).decode()
-    logging.debug(f"CRT Files:{crtdata}")
-    if not os.path.exists(tempdir):
-        shutil.copytree(crtdir, tempdir)
-    return tempdir + "\\session_import.py"
+    return f"{pathlib.Path().resolve()}\\SecureCRT\\session_import.py"
 
 def update_localhost(switchlist):
     '''
@@ -70,3 +68,10 @@ def update_localhost(switchlist):
     logging.info('Running update script on local SecureCRT instance.')
     run_command = [get_securecrt(), "/script", temporary_importscript(), "/arg", temporary_switchlist(switchlist)]
     subprocess.Popen(run_command)
+
+def copy_themes():
+    '''
+    Copy themes into local user's secureCRT keyword directory
+    '''
+    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{darkthemepath}", f'C:\Users\{pathlib.Path.home()}\AppData\Roaming\VanDyke\Config\Keywords\{darkthemepath}')
+    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{lightthemepath}", f'C:\Users\{pathlib.Path.home()}\AppData\Roaming\VanDyke\Config\Keywords\{lightthemepath}')

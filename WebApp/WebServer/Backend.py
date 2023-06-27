@@ -73,5 +73,5 @@ def copy_themes():
     '''
     Copy themes into local user's secureCRT keyword directory
     '''
-    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{darkthemepath}", f'C:\Users\{pathlib.Path.home()}\AppData\Roaming\VanDyke\Config\Keywords\{darkthemepath}')
-    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{lightthemepath}", f'C:\Users\{pathlib.Path.home()}\AppData\Roaming\VanDyke\Config\Keywords\{lightthemepath}')
+    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{darkthemepath}", f'C:\\Users\\{pathlib.Path.home()}\\AppData\\Roaming\\VanDyke\\Config\\Keywords\\{darkthemepath}')
+    shutil.copyfile(f"{pathlib.Path().resolve()}\\SecureCRT\\{lightthemepath}", f'C:\\Users\\{pathlib.Path.home()}\\AppData\\Roaming\\VanDyke\\Config\\Keywords\\{lightthemepath}')

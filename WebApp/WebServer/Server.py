@@ -479,7 +479,7 @@ class Server:
     '''
         Start web server
     '''
-    def run(self, host='0.0.0.0', port=5000, debug=False):
+    def run(self, host='0.0.0.0', port=5000):
         print('Starting server...')
         cors = setup(self.app, defaults={
             "*": ResourceOptions(

@@ -1,49 +1,31 @@
 import os, subprocess, time, json, shutil, logging, pathlib
-logging.basicConfig(level=logging.INFO,
-    format='%(levelname)s: %(asctime)s - %(message)s')
-
 
 darkthemepath = 'cisco_dark.ini' 
 lightthemepath = 'cisco_light.ini'
+logger = logging.getLogger(__name__)
 
 def get_securecrt():
     '''
     Locates SecureCRT on host device. Local install vs System Install
     '''
 
-    sysinstalldir = os.getenv("PROGRAMFILES") + "\\VanDyke Software\\SecureCRT"
-    if os.path.exists(sysinstalldir):
-        logging.debug(f"System Directory: '{sysinstalldir}'")
-        sysdata = subprocess.check_output(f"dir \"{sysinstalldir}\"", shell=True).decode()
-        logging.debug(f"System Files:{sysdata}")
-        if "SecureCRT.exe" in sysdata:
-            return sysinstalldir + '\\SecureCRT.exe'
+    install_dir = [
+        os.getenv("PROGRAMFILES") + "\\VanDyke Software\\SecureCRT",
+        os.getenv("PROGRAMFILES") + "\\VanDyke Software\\Clients\\SecureCRT",
+        os.getenv("LOCALAPPDATA") + "\\VanDyke Software\\SecureCRT",
+        os.getenv("LOCALAPPDATA") + "\\VanDyke Software\\Clients\\SecureCRT"
+    ]
+
+    for dir in install_dir:
+        if os.path.exists(dir):
+            logger.info(f"Checking directory: '{dir}'")
+            sysdata = subprocess.check_output(f"dir \"{dir}\"", shell=True).decode()
+            logger.debug(f"System Files:{sysdata}")
+            if "SecureCRT.exe" in sysdata:
+                logger.info(f"Found SecureCRT install at: {dir}")
+                return dir + "\\SecureCRT.exe"
         
-    userinstalldir = os.getenv("LOCALAPPDATA") + "\\VanDyke Software\\SecureCRT"
-    if os.path.exists(userinstalldir):
-        logging.debug(f'Local AppData: {userinstalldir}')
-        userdata = subprocess.check_output(f"dir \"{userinstalldir}\"", shell=True).decode()
-        logging.debug(f"User Files:{userdata}")
-        if "SecureCRT.exe" in userdata:
-            return userinstalldir + "\\SecureCRT.exe"
-        
-    userinstalldir = os.getenv("LOCALAPPDATA") + "\\VanDyke Software\\Clients\\SecureCRT"
-    if os.path.exists(userinstalldir):
-        logging.debug(f'Local AppData: {userinstalldir}')
-        userdata = subprocess.check_output(f"dir \"{userinstalldir}\"", shell=True).decode()
-        logging.debug(f"User Files:{userdata}")
-        if "SecureCRT.exe" in userdata:
-            return userinstalldir + "\\SecureCRT.exe"
-        
-    sysinstalldir = os.getenv("PROGRAMFILES") + "\\VanDyke Software\\Clients\\SecureCRT"
-    if os.path.exists(sysinstalldir):
-        logging.debug(f"System Directory: '{sysinstalldir}'")
-        sysdata = subprocess.check_output(f"dir \"{sysinstalldir}\"", shell=True).decode()
-        logging.debug(f"System Files:{sysdata}")
-        if "SecureCRT.exe" in sysdata:
-            return sysinstalldir + '\\SecureCRT.exe'
-        
-    logging.warn("Unable to locate SecureCRT install")
+    logger.warn("Unable to locate SecureCRT install")
     return None
 
 def temporary_switchlist(switchlist):
@@ -65,7 +47,7 @@ def update_localhost(switchlist):
     '''
     Updates SecureCRT sessions on server (non-blocking)
     '''
-    logging.info('Running update script on local SecureCRT instance.')
+    logger.info('Running update script on local SecureCRT instance.')
     run_command = [get_securecrt(), "/script", temporary_importscript(), "/arg", temporary_switchlist(switchlist)]
     subprocess.Popen(run_command)
 

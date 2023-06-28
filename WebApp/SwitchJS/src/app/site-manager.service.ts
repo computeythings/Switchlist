@@ -99,6 +99,12 @@ export class SiteManagerService {
         console.log(data)
     })
   }
+  deleteDevice(deviceIP, username='', password='') {
+    let tableDataURL = '/api/v1/devices'
+    return this.http.post(this.server + tableDataURL, JSON.stringify({deviceIP: deviceIP, username: username, password: password}), OPTIONS).subscribe(data => {
+      console.log(data)
+    })
+  }
   updateSecureCRTLocal(switchList) {
     let crtURL = '/api/v1/crtupdate'
     return this.http.post(this.server + crtURL, JSON.stringify(switchList), OPTIONS).subscribe(data => {

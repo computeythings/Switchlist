@@ -156,6 +156,16 @@ class NetworkDeviceDatabase:
         """
         return self.query(query_string, attrs)
     
+    def remove_device(self, device_ip):
+        '''
+        Remove the device matching ip @param(device_ip)
+        '''
+        query_string = f"""
+            DELETE from devices
+            WHERE scan_ip == ?;
+        """
+        return self.query(query_string, device_ip)
+    
     '''
         INSERT or UPDATE
     '''

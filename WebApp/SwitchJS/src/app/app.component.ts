@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SiteManagerService } from './site-manager.service';
 
 @Component({
@@ -11,5 +11,9 @@ export class AppComponent {
 
   constructor(private siteService: SiteManagerService) { 
     this.siteService.openStream()
+  }
+  @HostListener('document:keydown.delete', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    console.log('DELETE KEY PRESSED FROM app.component')
   }
 }

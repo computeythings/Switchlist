@@ -70,8 +70,11 @@ class Server:
             Adds/Deletes/Modifies(?) a network device within the SQL database
             Most likely just used to blacklist IPs from scans.
             '''
+            req = await request.json()
+            device_ip = req['deviceIP']
+            await self.database.remove_device(device_ip)
             return web.json_response(
-                {'message': 'Unavailable.'}, 
+                {'message': f'Removed device: {device_ip}'}, 
                 status = 201
             )
         self.app.router.add_post('/api/v1/devices', devices_post)

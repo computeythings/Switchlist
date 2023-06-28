@@ -156,6 +156,9 @@ export class TableComponent implements OnInit {
         this.detailChildIndex = data.viewDetail
       }
     }
+    if ( 'deleteEntry' in data ) {
+      this.siteService.deleteDevice(data.deleteEntry)
+    }
     this.cdr.detectChanges()
   }
 

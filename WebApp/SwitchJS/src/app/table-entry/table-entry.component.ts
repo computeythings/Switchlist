@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SiteManagerService } from '../site-manager.service';
 
@@ -211,6 +211,13 @@ export class TableEntryComponent implements OnInit {
         this.tableCallback.emit({selectedCount: -1})
     }
     this.selected = selected
+  }
+  @HostListener('document:keydown.delete', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    console.log('DELETE KEY PRESSED')
+    if (this.selected) {
+      this.tableCallback.emit({ deleteEntry: this.entry.scan_ip })
+    } 
   }
 
   detailViewUpdate() {

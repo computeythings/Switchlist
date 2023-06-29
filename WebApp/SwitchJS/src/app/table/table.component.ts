@@ -259,6 +259,8 @@ export class TableComponent implements OnInit {
 
   deleteDevices() {
     // delete selected devices
+    if ( !confirm(`Delete ${this.selectedCount} devices?`) )
+      return
     let deleteDevices = [];
     let deleteIndexes = [];
     this.tableRows.forEach((device, index) => {
@@ -271,6 +273,7 @@ export class TableComponent implements OnInit {
       next: data =>  {
         deleteIndexes.forEach((devIndex, offset) => {
           this.tableData.splice(devIndex - offset, 1);
+          this.selectedCount--;
         });
       },
       error: err =>  {

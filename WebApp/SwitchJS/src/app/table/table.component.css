@@ -8,6 +8,10 @@ th {
     padding: 15px 10px;
     background-color: #f8f8f8;
     text-align: left;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 1;
+    top: 0;
 }
 
 tr:hover {
@@ -60,6 +64,9 @@ tr > th:last-of-type,td:last-of-type {
     padding: .5rem 0;
     color: #4aa5ff;
     font-weight: 400;
+    position: -webkit-sticky; 
+    position: sticky;
+    z-index: 1;
 }
 
 .delete {

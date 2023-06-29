@@ -77,13 +77,7 @@ export class TableComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.siteService.getTableData().subscribe(data => {
-      let dataHolder: any = data;
-      dataHolder.forEach(ip => {
-        if (ip.managed || ip.reachable)
-          this.tableData.push(ip)
-      })
-    });
+    this.tableUpdate();
   }
 
   countDevices() {
@@ -110,6 +104,15 @@ export class TableComponent implements OnInit {
       });
     }
     return count
+  }
+  tableUpdate() {
+    this.siteService.getTableData().subscribe(data => {
+      let dataHolder: any = data;
+      dataHolder.forEach(ip => {
+        if (ip.managed || ip.reachable)
+          this.tableData.push(ip)
+      })
+    });
   }
 
   /*
@@ -155,9 +158,6 @@ export class TableComponent implements OnInit {
         }
         this.detailChildIndex = data.viewDetail
       }
-    }
-    if ( 'deleteEntry' in data ) {
-      this.siteService.deleteDevice(data.deleteEntry)
     }
     this.cdr.detectChanges()
   }
@@ -254,6 +254,24 @@ export class TableComponent implements OnInit {
       modalRef.componentInstance.siteSubnets = siteSubnets;
       modalRef.componentInstance.startJob = () => { this.jobRunning = true; };
     });
+  }
+
+  deleteDevices() {
+    // delete selected devices
+    let deleteDevices = [];
+    this.tableRows.forEach((device, index) => {
+      if ( device.selected ) {
+        deleteDevices.push(device.entry.scan_ip);
+      }
+    });
+    this.siteService.deleteDevices(deleteDevices).subscribe({
+      next: data =>  {
+        this.tableUpdate();
+      },
+      error: err =>  {
+        console.error(err)
+      }
+    })
   }
 
   /*

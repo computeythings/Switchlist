@@ -60,6 +60,11 @@ tr > th:last-of-type,td:last-of-type {
     padding: .5rem 0;
     color: #4aa5ff;
     font-weight: 400;
+    caret-color: transparent;
+}
+
+.delete {
+    color: red;
 }
 
 .search {
@@ -71,6 +76,7 @@ tr > th:last-of-type,td:last-of-type {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    caret-color: default;
 }
 .search i {
     padding: 0 1em;

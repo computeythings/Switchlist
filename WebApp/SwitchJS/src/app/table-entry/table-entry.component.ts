@@ -212,13 +212,6 @@ export class TableEntryComponent implements OnInit {
     }
     this.selected = selected
   }
-  @HostListener('document:keydown.delete', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
-    console.log('DELETE KEY PRESSED')
-    if (this.selected) {
-      this.tableCallback.emit({ deleteEntry: this.entry.scan_ip })
-    } 
-  }
 
   detailViewUpdate() {
     this.tableCallback.emit({ viewDetail: this.index })

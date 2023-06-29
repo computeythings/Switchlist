@@ -71,12 +71,15 @@ class Server:
             Most likely just used to blacklist IPs from scans.
             '''
             req = await request.json()
-            device_ip = req['deviceIP']
-            await self.database.remove_device(device_ip)
-            return web.json_response(
-                {'message': f'Removed device: {device_ip}'}, 
-                status = 201
-            )
+            ip_list = [str(i) for i in req['ipList']]
+            if (req['method'] == 'DELETE'):
+                logger.info(f'Removing devices: {ip_list}')
+                delete_results = self.database.remove_devices(ip_list)
+                logging.debug(f'Delete results:\n{delete_results}')
+                return web.json_response(
+                    {'message': f'Removed device: {ip_list}'}, 
+                    status = 201
+                )
         self.app.router.add_post('/api/v1/devices', devices_post)
 
         async def sites_get(request):

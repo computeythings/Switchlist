@@ -3,6 +3,10 @@
         <i class="fa fa-icon fa-search" aria-hidden="true"></i>
         <input type="text" id="device-search" (input)="updateFilter($event)">
     </div>
+    <div class="table-function delete" [class.disabled]="selectedCount === 0" appRotateIcon (click)="deleteDevices()" title="Delete selected devices">
+        <i class="fa fa-icon fa-solid fa-trash" aria-hidden="true"></i> 
+        Delete
+    </div>
     <div class="table-function" [class.disabled]="selectedCount === 0 || jobRunning" appRotateIcon (click)="updateDevices()" title="Update existing device info">
         <i class="fa fa-icon fa-solid fa-rotate-right rotate-icon" aria-hidden="true"></i> 
         Update

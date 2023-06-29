@@ -89,14 +89,16 @@ class NetworkDeviceDatabase:
             res = self.cur.execute(query, sql_args)
         else:
             res = self.cur.execute(query)
-        if 'UPDATE' in query or 'INSERT' in query or 'DELETE' in query:
+        list_results = res.fetchall()
+        if 'UPDATE' in query or 'INSERT' in query or 'DELETE' in query or 'REPLACE' in query:
+            logger.debug(f'Modified {res.rowcount} devices')
             try:
+                logger.debug(f'Committing query: {query}')
                 self.con.commit()
             except:
                 logger.error(f'Failed to commit transcation: $({query})')
-        list_results = res.fetchall()
-        logger.debug(f'Query $({query})\nResulted in:')
-        logger.debug(list_results)
+        else:
+            logger.debug(f'Found {len(list_results)} devices')
         return list_results
 
     def get_devices(self):
@@ -156,15 +158,15 @@ class NetworkDeviceDatabase:
         """
         return self.query(query_string, attrs)
     
-    def remove_device(self, device_ip):
+    def remove_devices(self, ip_list):
         '''
-        Remove the device matching ip @param(device_ip)
+        Remove the devices matching ips listed in @param(ip_list)
         '''
+        substitution_string = ','.join('?'*len(ip_list))
         query_string = f"""
-            DELETE from devices
-            WHERE scan_ip == ?;
+            DELETE FROM devices WHERE scan_ip IN ({substitution_string});
         """
-        return self.query(query_string, device_ip)
+        return self.query(query_string, ip_list, query_raw=True)
     
     '''
         INSERT or UPDATE

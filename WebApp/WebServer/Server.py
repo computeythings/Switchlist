@@ -71,7 +71,7 @@ class Server:
             Most likely just used to blacklist IPs from scans.
             '''
             req = await request.json()
-            ip_list = [str(i) for i in req['ipList']]
+            ip_list = [json.dumps(i) for i in req['ipList']]
             if (req['method'] == 'DELETE'):
                 logger.info(f'Removing devices: {ip_list}')
                 delete_results = self.database.remove_devices(ip_list)

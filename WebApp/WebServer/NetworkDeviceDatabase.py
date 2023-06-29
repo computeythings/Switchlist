@@ -164,7 +164,8 @@ class NetworkDeviceDatabase:
         '''
         substitution_string = ','.join('?'*len(ip_list))
         query_string = f"""
-            DELETE FROM devices WHERE scan_ip IN ({substitution_string});
+            DELETE FROM devices 
+            WHERE scan_ip IN ({substitution_string});
         """
         return self.query(query_string, ip_list, query_raw=True)
     
@@ -216,9 +217,10 @@ class NetworkDeviceDatabase:
         remove_sites = []
         for site in sites_final:
             if not site in sites:
-                # JSON dumps key value to match self.qeury() input
+                # JSON dumps key value to match self.query() input
                 remove_sites.append(json.dumps(site['name'])) 
         if len(remove_sites) > 0:
+            logging.debug(f'Removing sites: {remove_sites}')
             substitution_string = ','.join('?'*len(remove_sites))
             query_string = f'DELETE FROM sites WHERE name IN ({substitution_string});'
             self.query(query_string, remove_sites, query_raw=True)

@@ -106,6 +106,7 @@ export class TableComponent implements OnInit {
     return count
   }
   tableUpdate() {
+    this.tableData = []
     this.siteService.getTableData().subscribe(data => {
       let dataHolder: any = data;
       dataHolder.forEach(ip => {
@@ -259,14 +260,18 @@ export class TableComponent implements OnInit {
   deleteDevices() {
     // delete selected devices
     let deleteDevices = [];
+    let deleteIndexes = [];
     this.tableRows.forEach((device, index) => {
       if ( device.selected ) {
         deleteDevices.push(device.entry.scan_ip);
+        deleteIndexes.push(index);
       }
     });
     this.siteService.deleteDevices(deleteDevices).subscribe({
       next: data =>  {
-        this.tableUpdate();
+        deleteIndexes.forEach((devIndex, offset) => {
+          this.tableData.splice(devIndex - offset, 1);
+        });
       },
       error: err =>  {
         console.error(err)

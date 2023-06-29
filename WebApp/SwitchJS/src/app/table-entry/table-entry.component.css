@@ -1,6 +1,7 @@
 tr {
   border-top: 1px solid  #ddd;
   border-bottom: 0;
+  caret-color: transparent;
 }
 td {
     padding: 5px 10px;

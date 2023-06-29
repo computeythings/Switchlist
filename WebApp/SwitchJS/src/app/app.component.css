@@ -1,3 +1,6 @@
+body {
+    caret-color: transparent;
+}
 .content {
     display: flex;
     flex-direction: column;

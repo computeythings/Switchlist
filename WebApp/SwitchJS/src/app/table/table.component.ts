@@ -113,6 +113,7 @@ export class TableComponent implements OnInit {
         if (ip.managed || ip.reachable)
           this.tableData.push(ip)
       })
+      this.sortAscending(this.tableData, this.sortKey)
     });
   }
 
@@ -167,7 +168,7 @@ export class TableComponent implements OnInit {
     each header field has sort buttons that call this sort function to sort by the 
     field key and alternate between ascending and descending order
   */
-  tableSort(key: string) {
+  tableSort(key: string, force: boolean = false) {
     // toggle sort order if the same key is clicked twice
     if (key == this.sortKey) {
       if (this.sortOrder == this.SORT_ASC) {

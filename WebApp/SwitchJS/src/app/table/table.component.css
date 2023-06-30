@@ -12,6 +12,7 @@ th {
     position: sticky;
     z-index: 1;
     top: 0;
+    box-shadow: 0 0.8px 16px rgb(0 0 0 / 15%);
 }
 
 tr:hover {

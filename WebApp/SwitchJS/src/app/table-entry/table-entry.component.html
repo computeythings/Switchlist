@@ -16,13 +16,25 @@
         <td [attr.colspan]="tableHeaders.length+1" class="detail-view">
             <div class="detail-content" [ngClass]="detailView ? 'expanded' : 'collapsed'">
                 <div class="detail-column">
+                    <div class="column-header">
+                        <h4 class="detail-info-header">IP Address:</h4>
+                    </div>
+                    <div class="column-content">
+                        <ul class="half-width-column">
+                            <ng-container *ngFor="let ip of ipCol1 | keyvalue">
+                                <li title="{{ ip.value.vrf }}"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}{{ ip.value.vrf ? "*" : ""}}</li>
+                            </ng-container>
+                        </ul>
+                        <ul class="half-width-column" *ngIf="ipCol2">
+                            <ng-container *ngFor="let ip of ipCol2 | keyvalue">
+                                <li title="{{ ip.value.vrf }}"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}{{ ip.value.vrf ? "*" : ""}}</li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-column">
                     <div class="column-content">
                         <ul>
-                            <h4 class="detail-info-header">IP Address:</h4>
-                            <ng-container *ngFor="let ip of entry.ip_addresses | keyvalue">
-                                <li *ngIf="ip.value.vrf != ''" style="padding-bottom: 5px;"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}<br><strong style="font-size: 11px; padding-left: 5%;">VRF {{ ip.value.vrf }}</strong></li>
-                                <li *ngIf="ip.value.vrf == ''"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}</li>
-                            </ng-container>
                             <h4 class="detail-info-header">Model:</h4>
                             <li *ngFor="let model of entry.model">{{model}}</li>
                             <h4 class="detail-info-header">Serial:</h4>

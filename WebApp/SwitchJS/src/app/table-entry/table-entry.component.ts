@@ -23,6 +23,8 @@ export class TableEntryComponent implements OnInit {
   scanning: boolean = false;
   neighborsCol1 = {};
   neighborsCol2 = null;
+  ipCol1 = {};
+  ipCol2 = null;
   vlansCol1 = {};
   vlansCol2 = null;
   _devicesChange: Subscription;
@@ -60,23 +62,20 @@ export class TableEntryComponent implements OnInit {
       if ( result.device === this.entry.scan_ip ) {
         if ( result.data ) {
           for ( let [key, value] of Object.entries(result.data) ) {
-            this.entry[key] = value;
+            this.entry[key] = value
           }
           this.updateVlans()
-          this.updateNeighbors()
-          this.updateSearchString()
-          this.updatedString = new Date(this.entry.updated * 1000).toUTCString()
         }
         this.scanning = result.scanning;
-        this.setIcon();
       }
     });
   }
 
   ngOnInit(): void {
     this.updateNeighbors()
-    this.selected = false;
-    this.visible = true;
+    this.updateIPs()
+    this.selected = false
+    this.visible = true
     this.setIcon()
     this.updateSearchString()
 
@@ -179,6 +178,23 @@ export class TableEntryComponent implements OnInit {
     }
     else
       this.neighborsCol1 = this.entry.neighbors;
+  }
+  updateIPs() {
+    let ipCount = Object.keys(this.entry.ip_addresses).length;
+    if ( ipCount > 25) {
+      this.ipCol2 = {};
+      let cutoff = Math.ceil(ipCount/2);
+      let index = 0;
+      for ( let [key, value] of Object.entries(this.entry.ip_addresses )) {
+        if ( index < cutoff )
+          this.ipCol1[key] = value;
+        else
+          this.ipCol2[key] = value;
+        index++;
+      }
+    }
+    else
+      this.ipCol1 = this.entry.ip_addresses;
   }
 
   updateVlans() {

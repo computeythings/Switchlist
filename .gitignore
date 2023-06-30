@@ -132,3 +132,4 @@ dist
 # Data files
 Network.db
 build/
+__pycache__

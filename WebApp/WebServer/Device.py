@@ -15,6 +15,7 @@ class Device:
         self.updated = 0
         self.uptime = 0
         self.users = 0
+        self.configs = ''
         self.base_mac = []
         self.managed = False
         self.reachable = False
@@ -47,5 +48,6 @@ class Device:
             'users': self.users,
             'base_mac': self.base_mac,
             'managed': self.managed,
-            'reachable': self.reachable
+            'reachable': self.reachable,
+            'configs': self.configs
         }

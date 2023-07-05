@@ -304,7 +304,7 @@ class Brocade:
     '''
         Save info for use in testing
     '''
-    def save_offline(self, directory):
+    def save_offline(self):
         outputs = {
             'show run' : self.send('show run'),
             'show version' : self.send('show version'),
@@ -313,9 +313,7 @@ class Brocade:
             'show lldp neighbors detail' : self.send('show lldp neighbors detail'),
             'show interfaces brief' : self.send('show interfaces brief'),
         }
-        filepath = os.path.join(directory, f'{self.ip}.json')
-        with open(filepath, "w", encoding='UTF-8') as outfile:
-            json.dump(outputs, outfile, indent=2)
+        return outputs
 
     def json(self):
         data = {

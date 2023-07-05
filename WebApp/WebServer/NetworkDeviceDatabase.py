@@ -31,7 +31,8 @@ class NetworkDeviceDatabase:
                     users, 
                     base_mac, 
                     managed,
-                    reachable
+                    reachable,
+                    configs
                 );"""
             )
             self.con.commit()
@@ -128,7 +129,8 @@ class NetworkDeviceDatabase:
                 :users, 
                 :base_mac, 
                 :managed,
-                :reachable
+                :reachable,
+                :configs
             );
         """
         return self.query(query_string, device)
@@ -153,7 +155,8 @@ class NetworkDeviceDatabase:
             users = :users, 
             base_mac = :base_mac, 
             managed = :managed,
-            reachable = :reachable
+            reachable = :reachable,
+            configs = :configs
             WHERE scan_ip == :scan_ip;
         """
         return self.query(query_string, attrs)

@@ -43,6 +43,7 @@ class Cisco:
         self.uptime = '0 days 0 minutes 0 seconds'
         self.mac = []
         self.int_status_string = ''
+        self.configs = ''
         for key, value in kwargs.items():
             setattr(self, key, value)
         self.prompt = self.hostname + ('#' if self.privileged else '>')
@@ -1303,7 +1304,8 @@ class Cisco:
             'users': self.user_ports,
             'base_mac': self.mac,
             'managed': True,
-            'reachable': True
+            'reachable': True,
+            'configs': self.configs
         }
         return data
 
@@ -1327,10 +1329,11 @@ class Cisco:
         jsonfile = directory + '\\%s - %s.json' % (self.ip, self.hostname)
         file.write(json.dump(vars(self)), jsonfile, indent=4)
 
-    def save_offline(self, directory):
+    def save_offline(self):
         outputs = {
             'device_type' : self.make.lower(),
             'show run' : self.send('show run'),
+            'show run all' : self.send('show run all'),
             'show version' : self.send('show version'),
             'show mac address-table' : self.send('show mac address-table'),
             'show ip arp' : self.send('show ip arp'),
@@ -1346,9 +1349,8 @@ class Cisco:
             'show interfaces status' : self.send('show interfaces status'),
             'show version | json' : self.send('show version | json'),
         }
-        filepath = os.path.join(directory, f'{self.ip}.json')
-        with open(filepath, "w", encoding='UTF-8') as outfile:
-            json.dump(outputs, outfile, indent=2)
+        self.configs = json.dumps(outputs)
+        return outputs
         
     '''
         Health check - confirm logged in

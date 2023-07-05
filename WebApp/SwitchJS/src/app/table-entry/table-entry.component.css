@@ -115,6 +115,7 @@ tr > th:last-of-type,td:last-of-type {
     text-align: left;
   }
   .half-width-column {
+    min-width: 15em;
     width: 49%;
   }
   .content-keyvalue {

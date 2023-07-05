@@ -21,14 +21,20 @@
                     </div>
                     <div class="column-content">
                         <ul class="half-width-column">
-                            <ng-container *ngFor="let ip of ipCol1 | keyvalue">
-                                <li title="{{ ip.value.vrf }}"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}{{ ip.value.vrf ? "*" : ""}}</li>
-                            </ng-container>
+                            <li *ngFor="let ip of ipCol1 | keyvalue">
+                                <div title="{{ ip.value.vrf }}" class="content-keyvalue">
+                                    <div class="content-key"><div [innerHTML]="portName(ip.value.interface) + ':' |  searchHighlight: filterString"></div></div>
+                                    <div class="content-value" [innerHTML]="ip.key + (ip.value.vrf ? '*' : '') |  searchHighlight: filterString"></div>
+                                </div>
+                            </li>
                         </ul>
                         <ul class="half-width-column" *ngIf="ipCol2">
-                            <ng-container *ngFor="let ip of ipCol2 | keyvalue">
-                                <li title="{{ ip.value.vrf }}"><strong>{{ ip.value.interface }}:</strong> {{ip.key}}{{ ip.value.vrf ? "*" : ""}}</li>
-                            </ng-container>
+                            <li *ngFor="let ip of ipCol2 | keyvalue">
+                                <div title="{{ ip.value.vrf }}" class="content-keyvalue">
+                                    <div class="content-key"><div [innerHTML]="portName(ip.value.interface) + ':' |  searchHighlight: filterString"></div></div>
+                                    <div class="content-value" [innerHTML]="ip.key + (ip.value.vrf ? '*' : '') |  searchHighlight: filterString"></div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -36,9 +42,9 @@
                     <div class="column-content">
                         <ul>
                             <h4 class="detail-info-header">Model:</h4>
-                            <li *ngFor="let model of entry.model">{{model}}</li>
+                            <li *ngFor="let model of entry.model"  [innerHTML]="model | searchHighlight: filterString"></li>
                             <h4 class="detail-info-header">Serial:</h4>
-                            <li *ngFor="let serial of entry.serial">{{serial}}</li>
+                            <li *ngFor="let serial of entry.serial" [innerHTML]="serial | searchHighlight: filterString"></li>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +54,7 @@
                             <h4 class="detail-info-header">User Ports:</h4>
                             <li>{{ entry.users }}</li>
                             <h4 class="detail-info-header">MAC Address:</h4>
-                            <li *ngFor="let mac of entry.base_mac">{{mac}}</li>
+                            <li *ngFor="let mac of entry.base_mac" [innerHTML]="mac | searchHighlight: filterString"></li>
                             <h4 class="detail-info-header">Uptime:</h4>
                             <li>{{ entry.uptime }}</li>
                             <h4 class="detail-info-header">Last Updated:</h4>
@@ -64,16 +70,16 @@
                         <ul class="half-width-column">
                             <li *ngFor="let neighbor of neighborsCol1 | keyvalue">
                                 <div class="content-keyvalue">
-                                    <div class="content-key"><div>{{ portName(neighbor.key) }}:</div></div>
-                                    <div class="content-value">{{neighbor.value.distant_host}}</div>
+                                    <div class="content-key"><div [innerHTML]="portName(neighbor.key) + ':' | searchHighlight: filterString"></div></div>
+                                    <div class="content-value" [innerHTML]="neighbor.value.distant_host | searchHighlight: filterString"></div>
                                 </div>
                             </li>
                         </ul>
                         <ul class="half-width-column" *ngIf="neighborsCol2">
                             <li *ngFor="let neighbor of neighborsCol2 | keyvalue">
                                 <div class="content-keyvalue">
-                                    <div class="content-key">{{ portName(neighbor.key) }}:</div>
-                                    <div class="content-value">{{neighbor.value.distant_host}}</div>
+                                    <div class="content-key"><div [innerHTML]="portName(neighbor.key) + ':' | searchHighlight: filterString"></div></div>
+                                    <div class="content-value" [innerHTML]="neighbor.value.distant_host | searchHighlight: filterString"></div>
                                 </div>
                             </li>
                         </ul>

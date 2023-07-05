@@ -141,7 +141,7 @@ export class TableEntryComponent implements OnInit {
     let shorthand = ''
     if ( this.entry.hasOwnProperty('make') ) {
       if ( this.entry.make === 'Cisco' ) 
-        shorthand = longform.replace('AppGigabitEthernet', 'Ap').replace('FortyGigabitEthernet', 'Fo').replace('TwentyFiveGigE', 'Twe').replace('TenGigabitEthernet', 'Te').replace('GigabitEthernet', 'Gi').replace('FastEthernet', 'Fas').replace('Port-channel', 'Po')
+        shorthand = longform.replace('AppGigabitEthernet', 'Ap').replace('FortyGigabitEthernet', 'Fo').replace('TwentyFiveGigE', 'Twe').replace('TenGigabitEthernet', 'Te').replace('GigabitEthernet', 'Gi').replace('FastEthernet', 'Fas').replace('Port-channel', 'Po').replace('Loopback','Lo')
       if ( this.entry.make === 'Brocade' )
         shorthand = `e${longform}`
     }

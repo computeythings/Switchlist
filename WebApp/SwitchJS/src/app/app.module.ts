@@ -18,6 +18,7 @@ import { ScrapeModalComponent } from './scrape-modal/scrape-modal.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { SearchHighlightPipe } from './search-highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     TableEntryComponent,
     SiteModalComponent,
     DiscoverModalComponent,
-    ScrapeModalComponent
+    ScrapeModalComponent,
+    SearchHighlightPipe
   ],
   imports: [
     BrowserModule,

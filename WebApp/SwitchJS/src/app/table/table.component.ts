@@ -4,6 +4,7 @@ import { CsvModalComponent } from '../csv-modal/csv-modal.component';
 import { DiscoverModalComponent } from '../discover-modal/discover-modal.component';
 import { ScrapeModalComponent } from '../scrape-modal/scrape-modal.component';
 import { SiteManagerService } from '../site-manager.service';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -27,6 +28,7 @@ export class TableComponent implements OnInit {
   deviceCount = 0;
   selectedCount = 0;
   discoverProgress = 0;
+  updateFilter$ = new Subject<string>();
   tableHeaders: Array<{name:string, selector:string}>= [
     {name: 'Hostname', selector: 'hostname'},
     {name: 'IP Address', selector: 'scan_ip'},
@@ -43,6 +45,10 @@ export class TableComponent implements OnInit {
   };
 
   constructor(private cdr: ChangeDetectorRef, private modalService: NgbModal, private siteService: SiteManagerService) {
+    this.updateFilter$.pipe(debounceTime(300)).subscribe((value) => {
+      this.filterString = value
+      this.cdr.detectChanges()
+    });
     this._discoverSubscription = siteService.jobChange.subscribe(result => {
       this.jobRunning = result.running;
       this.discoverProgress = result.progress;
@@ -145,10 +151,6 @@ export class TableComponent implements OnInit {
           this.selectedCount+= 1
       }
     });
-    this.cdr.detectChanges()
-  }
-  updateFilter(event) {
-    this.filterString = event.target.value
     this.cdr.detectChanges()
   }
   updateColFilter(event, columnName) {

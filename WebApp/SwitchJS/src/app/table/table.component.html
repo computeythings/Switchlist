@@ -1,7 +1,7 @@
 <div class="table-functions">
     <div class="search">
         <i class="fa fa-icon fa-search" aria-hidden="true"></i>
-        <input type="text" id="device-search" (input)="updateFilter($event)">
+        <input type="text" id="device-search" (input)="updateFilter$.next($event.target.value)">
     </div>
     <div class="table-function delete" [class.disabled]="selectedCount === 0" appRotateIcon (click)="deleteDevices()" title="Delete selected devices">
         <i class="fa fa-icon fa-solid fa-trash" aria-hidden="true"></i> 

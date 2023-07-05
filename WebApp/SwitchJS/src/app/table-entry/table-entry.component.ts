@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SiteManagerService } from '../site-manager.service';
 
@@ -12,6 +12,13 @@ export class TableEntryComponent implements OnInit {
   @Input() index: string;
   @Input() tableHeaders: Array<{name:string, selector:string}>;
   @Input() filterString: string;
+  @Input() columnFilters: { [key:string]: string } = {
+    hostname: '',
+    scan_ip: '',
+    base_model: '',
+    firmware: '',
+    status: ''
+  };
   @Output() tableCallback: EventEmitter<any> = new EventEmitter();
   icon: string = '';
   iconAlt: string = '';
@@ -100,7 +107,11 @@ export class TableEntryComponent implements OnInit {
   }
 
   isFiltered() {
-    if (this.searchString.toUpperCase().includes(this.filterString.toUpperCase())) {
+    if ( this.searchString.toUpperCase().includes(this.filterString.toUpperCase()) &&
+          this.entry.hostname.toUpperCase().includes(this.columnFilters.hostname.toUpperCase()) &&
+          this.entry.scan_ip.toUpperCase().includes(this.columnFilters.scan_ip.toUpperCase()) &&
+          this.entry.base_model.toUpperCase().includes(this.columnFilters.base_model.toUpperCase()) &&
+          this.entry.firmware.toUpperCase().includes(this.columnFilters.firmware.toUpperCase()) ) {
       this.toggleVisible(true);
       return true;
     }
@@ -229,15 +240,8 @@ export class TableEntryComponent implements OnInit {
     this.selected = selected
   }
 
-  detailViewUpdate() {
-    this.tableCallback.emit({ viewDetail: this.index })
-  }
-
   toggleDetailView(show = false) {
     this.detailView = show
-    if ( this.detailView ) {
-      this.tableCallback.emit({ viewDetail: this.index })
-    }
   }
 
   getView() {

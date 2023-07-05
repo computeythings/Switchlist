@@ -33,10 +33,17 @@
 <table>
     <thead>
         <tr>
-            <th class="row-selector"><input type="checkbox" id="select-all" [checked]="deviceCount == selectedCount && deviceCount > 0" (change)="toggleSelectAll($event.target.checked)"></th>
+            <th class="row-selector">
+                <input type="checkbox" id="select-all" [checked]="deviceCount == selectedCount && deviceCount > 0" (change)="toggleSelectAll($event.target.checked)">
+            </th>
             <th *ngFor="let header of tableHeaders" resizable (resizeEnd)="onResize($event, header.selector)">
                 <div class="title-col">
-                    <input class="columnFilter" type="text" placeholder="{{ header.name }}">
+                    <ng-container *ngIf="header.selector != 'status'; else statusFilter">
+                        <input class="columnFilter" type="text" placeholder="{{ header.name }}" (input)="updateColFilter($event, header.selector)">    
+                    </ng-container>
+                    <ng-template #statusFilter>
+                        <div class="columnFilter">{{ header.name }}</div>  
+                    </ng-template>
                     <div class="sortBox" (click)="tableSort(header.selector)">
                         <div *ngIf="sortKey != header.selector" class="fa fa-sort columnSortIcons"></div>
                         <div *ngIf="sortKey == header.selector && sortOrder == SORT_ASC" class="fa fa-sort-up columnSortIcons"></div>
@@ -53,7 +60,8 @@
         [entry]="entry"
         [index]="entry.scan_ip"
         [tableHeaders]="tableHeaders" 
-        [filterString]="filterString" 
+        [filterString]="filterString"
+        [columnFilters]="columnFilters"
         (tableCallback)="tableEntryCallback($event)">
     </tbody>
 </table>

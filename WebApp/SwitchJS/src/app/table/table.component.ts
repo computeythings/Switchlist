@@ -34,6 +34,13 @@ export class TableComponent implements OnInit {
     {name: 'Firmware', selector: 'firmware'},
     {name: 'Status', selector: 'status'}
   ]
+  columnFilters: { [key:string]: string } = {
+    hostname: '',
+    scan_ip: '',
+    base_model: '',
+    firmware: '',
+    status: ''
+  };
 
   constructor(private cdr: ChangeDetectorRef, private modalService: NgbModal, private siteService: SiteManagerService) {
     this._discoverSubscription = siteService.jobChange.subscribe(result => {
@@ -65,7 +72,8 @@ export class TableComponent implements OnInit {
             "users": 0,
             "base_mac": [],
             "managed": false,
-            "reachable": true
+            "reachable": true,
+            "configs": {}
           })
         }
       }
@@ -82,12 +90,18 @@ export class TableComponent implements OnInit {
 
   countDevices() {
     let count = 0;
+    let lastDevice = null;
     if (this.tableRows) {
       this.tableRows.forEach(device => {
         if ( !device.visible )
           return
+        lastDevice = device;
         count++;
       });
+    }
+    if ( count === 1 ) {
+      // if there's only one device, expand detail view (do not propagate update as this will cause a loop)
+      lastDevice.toggleDetailView(true, true);
     }
     return count
   }
@@ -137,32 +151,27 @@ export class TableComponent implements OnInit {
     this.filterString = event.target.value
     this.cdr.detectChanges()
   }
+  updateColFilter(event, columnName) {
+    this.columnFilters[columnName] = event.target.value
+    this.cdr.detectChanges()
+  }
   /*
     callback used by table-entry child components to update parent data
   */
-  tableEntryCallback(data) {
-    if ( 'selectedCount' in data ) {
-      this.selectedCount += data.selectedCount;
-    }
-    if ( 'deviceCount' in data ) {
-      this.deviceCount += data.deviceCount;
-    }
-    if ( 'stackCount' in data ) {
-      this.stackCount += data.stackCount;
-    }
-    if ( 'viewDetail' in data ) {
-      if ( this.detailChildIndex != data.viewDetail ) {
-        let previousView = this.tableRows.find((rowElement: any, index: number, unkArray: any[]) => {
-          return rowElement.index === this.detailChildIndex;
-        });
-        if ( previousView ) {
-          previousView.toggleDetailView(false)
-        }
-        this.detailChildIndex = data.viewDetail
+    tableEntryCallback(data) {
+      if ('selectedCount' in data) {
+        this.selectedCount += data.selectedCount;
       }
+      if ('deviceCount' in data) {
+        this.deviceCount += data.deviceCount;
+      }
+      if ('stackCount' in data) {
+        this.stackCount += data.stackCount;
+      }
+      
+      // Manually trigger change detection to update the UI
+      this.cdr.detectChanges();
     }
-    this.cdr.detectChanges()
-  }
 
   /* 
     each header field has sort buttons that call this sort function to sort by the 

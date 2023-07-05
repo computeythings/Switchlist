@@ -434,6 +434,7 @@ class Server:
                 switch.parse_cdp()
                 switch.parse_fips()
                 switch.parse_user_ports()
+                switch.save_offline()
             else:
                 switch.readinfo()
                 switch.parse_all()

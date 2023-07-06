@@ -35,6 +35,7 @@ class Brocade:
         self.lldp_string = ''
         self.mgmt_interface = ''
         self.int_status_string = ''
+        self.configs = ''
         self.uptime = '0 days 0 minutes 0 seconds'
         
         for key, value in kwargs.items():
@@ -351,7 +352,8 @@ class Brocade:
             'users': self.user_ports, 
             'base_mac': self.mac,
             'managed': True,
-            'reachable': True
+            'reachable': True,
+            'configs': self.configs
         }
         return data
     

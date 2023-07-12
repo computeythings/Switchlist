@@ -126,11 +126,11 @@ export class TableEntryComponent implements OnInit {
     if ( this.scanning ) {
       iconType = 'scanning'
     } 
-    else if ( this.entry.managed ) {
-      iconType = 'managed'
-    }
     else if ( this.entry.reachable ) {
       iconType = 'nologin'
+      if ( this.entry.managed ) {
+        iconType = 'managed'
+      }
     }
     this.icon = this.statusIcons[iconType].url
     this.iconAlt = this.statusIcons[iconType].alt

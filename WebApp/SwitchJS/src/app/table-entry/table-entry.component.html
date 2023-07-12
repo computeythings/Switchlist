@@ -9,7 +9,7 @@
             </td>
         </ng-container>
         <td (click)="toggleDetailView(!detailView)">
-            <img class="status-icon" [class.scanning]="scanning" type="image/svg+xml" [src]="icon" [alt]="iconAlt" [title]="iconAlt">
+            <img class="status-icon" type="image/svg+xml" [src]="scanning ? 'assets/svg/scanning.svg': icon" [alt]="iconAlt" [title]="iconAlt" [class.scanning]="scanning" >
         </td>
     </tr>
     <tr class='detail-row'>

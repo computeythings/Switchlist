@@ -55,10 +55,10 @@ export class TableComponent implements OnInit {
       this.cdr.detectChanges()
     });
     this._deviceSubscription = siteService.devicesChange.subscribe(update => {
+      let entryExists = this.tableRows.find((rowElement: any, index: number, unkArray: any[]) => {
+        return rowElement.entry.scan_ip === update.device;
+      });
       if ( 'reachable' in update.data && update.data.reachable) {
-        let entryExists = this.tableRows.find((rowElement: any, index: number, unkArray: any[]) => {
-          return rowElement.entry.scan_ip === update.device;
-        });
         if ( !entryExists ) {
           this.tableData.push({
             "scan_ip": update.device,
@@ -84,10 +84,7 @@ export class TableComponent implements OnInit {
         }
       }
       if ( 'scanning' in update) {
-        let entry = this.tableData.filter(row => {
-          return row.scan_ip == update.device
-        })
-        entry.scanning = update.scanning
+        entryExists.scanning = update.scanning
       }
       if (this.sortOrder == this.SORT_ASC)
         this.sortAscending(this.tableData, this.sortKey) 

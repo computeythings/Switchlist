@@ -209,6 +209,10 @@ export class TableEntryComponent implements OnInit {
   }
 
   updateVlans() {
+    if ( !this.entry.hasOwnProperty('vlans') ) {
+      // Handle unmanaged objects that do not have vlans
+      return;
+    }
     let vlanCount = Object.keys(this.entry.vlans).length;
     if ( vlanCount > 25 ) {
       this.vlansCol2 = {};

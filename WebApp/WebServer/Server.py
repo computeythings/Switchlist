@@ -412,7 +412,12 @@ class Server:
                     await self.sse_queue({'type': 'device_update', 'ip': ip, 'attributes': {}, 'scanning': True})
                     device_info = await self.scrape(ip, job.data['username'], job.data['password']) # await device info
                     await job.update(ip) # Update ip as completed
-                    self.database.update_device(Device(**device_info).sql_dump())
+                    device_sql = Device(**device_info).sql_dump()
+                    if device_info['reachable']:
+                        logger.debug(f'Updating device info:{json.dumps(device_sql)}')
+                        self.database.update_device(device_sql)
+                    else:
+                        self.database.set_reachability(device_sql)
                     # send update out to web clients
                     await self.sse_queue({'type': 'device_update', 'id': job.id, 'ip': ip, 'attributes': device_info, 'scanning': False})
             await job.complete() # Update info and write to database

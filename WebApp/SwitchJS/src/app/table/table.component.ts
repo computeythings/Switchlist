@@ -83,6 +83,12 @@ export class TableComponent implements OnInit {
           })
         }
       }
+      if ( 'scanning' in update) {
+        let entry = this.tableData.filter(row => {
+          return row.scan_ip == update.device
+        })
+        entry.scanning = update.scanning
+      }
       if (this.sortOrder == this.SORT_ASC)
         this.sortAscending(this.tableData, this.sortKey) 
       else

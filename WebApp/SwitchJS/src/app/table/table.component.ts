@@ -83,7 +83,7 @@ export class TableComponent implements OnInit {
           })
         }
       }
-      if ( 'scanning' in update) {
+      if ( entryExists && 'scanning' in update) {
         entryExists.scanning = update.scanning
       }
       if (this.sortOrder == this.SORT_ASC)

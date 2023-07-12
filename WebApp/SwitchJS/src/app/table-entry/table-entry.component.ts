@@ -121,6 +121,11 @@ export class TableEntryComponent implements OnInit {
     return false;
   }
 
+  setReachability(reachable) {
+    this.entry.reachable = reachable
+    this.setIcon()
+  }
+
   setIcon() {
     let iconType = 'offline';
     if ( this.scanning ) {

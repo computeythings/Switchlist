@@ -58,8 +58,8 @@ export class TableComponent implements OnInit {
       let entryExists = this.tableRows.find((rowElement: any, index: number, unkArray: any[]) => {
         return rowElement.entry.scan_ip === update.device;
       });
-      if ( 'reachable' in update.data && update.data.reachable) {
-        if ( !entryExists ) {
+      if ( !entryExists ) {
+        if ( 'reachable' in update.data && update.data.reachable ) {
           this.tableData.push({
             "scan_ip": update.device,
             "base_subnet": "",
@@ -83,8 +83,12 @@ export class TableComponent implements OnInit {
           })
         }
       }
-      if ( entryExists && 'scanning' in update) {
-        entryExists.scanning = update.scanning
+      if ( entryExists ) {
+        if ( 'scanning' in update )
+          entryExists.scanning = update.scanning
+        if ( 'reachable' in update.data )
+          console.log(`Setting reachabilit of ${update.device} to ${update.data.reachable}`)
+          entryExists.setReachability(update.data.reachable)
       }
       if (this.sortOrder == this.SORT_ASC)
         this.sortAscending(this.tableData, this.sortKey) 

@@ -23,7 +23,7 @@ jobs:
     - name: Packaging the code with pyinstaller
       run: |
         pyinstaller -F webserver.py
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: webserver-artifact
-        path: dist/webserver.exe
+        path: webserver.exe

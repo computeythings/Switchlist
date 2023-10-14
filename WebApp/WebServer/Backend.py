@@ -53,8 +53,8 @@ def update_localhost(switchlist):
     if securecrt is None:
         messagebox.showwarning("Could not locate SecureCRT", "Please select SecureCRT .exe file")
         securecrt = filedialog.askopenfilename(title="Please Select SecureCRT",filetypes=[("exe files", "*.exe")])
-    if securecrt is None:
-        logger.warn("Could not locate SecureCRT: skipping update")
+    if securecrt == "":
+        logger.error("Could not locate SecureCRT install - skipping update")
         return
     run_command = [securecrt, "/script", temporary_importscript(), "/arg", temporary_switchlist(switchlist)]
     subprocess.Popen(run_command)

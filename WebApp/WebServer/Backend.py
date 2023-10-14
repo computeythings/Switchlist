@@ -1,3 +1,4 @@
+from tkinter import messagebox, filedialog
 import os, subprocess, time, json, shutil, logging, pathlib
 
 darkthemepath = 'cisco_dark.ini' 
@@ -48,7 +49,14 @@ def update_localhost(switchlist):
     Updates SecureCRT sessions on server (non-blocking)
     '''
     logger.info('Running update script on local SecureCRT instance.')
-    run_command = [get_securecrt(), "/script", temporary_importscript(), "/arg", temporary_switchlist(switchlist)]
+    securecrt = get_securecrt()
+    if securecrt is None:
+        messagebox.showwarning("Could not locate SecureCRT", "Please select SecureCRT .exe file")
+        securecrt = filedialog.askopenfilename(title="Please Select SecureCRT",filetypes=[("exe files", "*.exe")])
+    if securecrt is None:
+        logger.warn("Could not locate SecureCRT: skipping update")
+        return
+    run_command = [securecrt, "/script", temporary_importscript(), "/arg", temporary_switchlist(switchlist)]
     subprocess.Popen(run_command)
 
 def copy_themes():

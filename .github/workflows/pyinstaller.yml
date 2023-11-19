@@ -26,4 +26,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: webserver-artifact
-        path: webserver.exe
+        path: dist/webserver.exe

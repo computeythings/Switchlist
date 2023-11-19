@@ -22,7 +22,7 @@ jobs:
         pip install pyinstaller
     - name: Packaging the code with pyinstaller
       run: |
-        pyinstaller -F webserver.py
+        pyinstaller webserver.spec
     - uses: actions/upload-artifact@v3
       with:
         name: webserver-artifact
